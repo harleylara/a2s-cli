@@ -1,9 +1,24 @@
+import sys
+from pathlib import Path
 from setuptools import setup, find_packages
 from setuptools.command.develop import develop
 from setuptools.command.install import install
 
 def boostrap_install():
-    pass
+
+    host_platform = sys.platform
+
+    if not host_platform.startswith("linux"):
+        raise Exception("Intallation not allowed in this platform.")
+
+    WORK_DIR = Path().home() / f".a2s"
+    WORK_DIR.mkdir(exist_ok=True)
+
+    if host_platform.startswith("darwin"):
+        # MacOs Install
+        pass
+
+    # sudo apt install apptainer
 
 
 class DevelopCmd(develop):
