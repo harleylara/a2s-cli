@@ -1,4 +1,5 @@
 import sys
+import shutil
 from pathlib import Path
 from setuptools import setup, find_packages
 from setuptools.command.develop import develop
@@ -9,7 +10,12 @@ def boostrap_install():
     host_platform = sys.platform
 
     if not host_platform.startswith("linux"):
-        raise Exception("Intallation not allowed in this platform.")
+        sys.stderr.write(f"Platform {host_platform} not supported. Only linux systems.")
+        sys.exit(1)
+
+    if shutil.which("apptainer") is None:
+        sys.stderr.write(f"\nError: 'apptainer' is not installed.\n")
+        sys.exit(1)
 
     WORK_DIR = Path().home() / f".a2s"
     WORK_DIR.mkdir(exist_ok=True)
