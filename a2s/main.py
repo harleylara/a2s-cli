@@ -1,8 +1,8 @@
 import argparse
-from a2s.commands import Command, Container
+from a2s.commands import Command, Run
 
 COMMAND_OPTS: dict[str, type[Command]] = {
-    "container": Container
+    "run": Run
 }
 
 def main(args=None) -> None:
