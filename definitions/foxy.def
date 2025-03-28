@@ -1,0 +1,14 @@
+Bootstrap: localimage
+From: base.sif
+
+%post
+    apt-get update && apt-get install -y \
+        ros-humble-ros2-controllers
+    mkdir -p ~/foxy_robot_ws/src
+    cd ~/foxy_robot_ws/src
+    git clone https://github.com/EOLab-HSRW/foxy-robot.git
+    cd ~/foxy_robot_ws
+    rosdep install --from-paths src --ignore-src -r -y
+
+    # Clean up to reduce image size
+    apt-get clean && rm -rf /var/lib/apt/lists/*

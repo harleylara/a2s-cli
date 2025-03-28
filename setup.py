@@ -1,9 +1,15 @@
 import sys
 import shutil
+import subprocess
 from pathlib import Path
 from setuptools import setup, find_packages
 from setuptools.command.develop import develop
 from setuptools.command.install import install
+
+__package__ = "a2s"
+WORK_DIR = Path().home() / f".{__package__}"
+DEFITIONS_DIR = WORK_DIR / "definitions"
+CONTAINERS_DIR = WORK_DIR / "containers"
 
 def boostrap_install():
 
@@ -17,14 +23,30 @@ def boostrap_install():
         sys.stderr.write(f"\nError: 'apptainer' is not installed.\n")
         sys.exit(1)
 
-    WORK_DIR = Path().home() / f".a2s"
     WORK_DIR.mkdir(exist_ok=True)
 
-    if host_platform.startswith("darwin"):
-        # MacOs Install
-        pass
+    DEFITIONS_DIR.mkdir(exist_ok=True)
+    CONTAINERS_DIR.mkdir(exist_ok=True)
 
-    # sudo apt install apptainer
+    shutil.copytree("./definitions/", DEFITIONS_DIR, dirs_exist_ok=True)
+
+    # always build base.def first
+    subprocess.run(
+        [
+            "apptainer",
+            "build",
+            "--force",
+            CONTAINERS_DIR / "base.sif",
+            DEFITIONS_DIR / "base.def",
+        ],
+        cwd=WORK_DIR,
+        check=True
+    )
+
+    for item in DEFITIONS_DIR.iterdir():
+        # skip base.def
+        if item.is_file() and (item.stem != "base"):
+            subprocess.run(["apptainer", "build", f"{item.stem}.sif", DEFITIONS_DIR / item.name], cwd=CONTAINERS_DIR, check=True)
 
 
 class DevelopCmd(develop):
@@ -42,7 +64,7 @@ class InstallCmd(install):
 
 
 setup(
-    name='a2s',
+    name=__package__,
     version='0.0.0',
     packages=find_packages(),
     install_requires=[

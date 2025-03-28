@@ -16,7 +16,7 @@ From: osrf/ros:humble-desktop-full
     export PATH="/usr/bin:$PATH"
 
 %labels
-    Author Paola
+    Author Paola, Harley
     Version 1.0
     Description "Base A2S image with ROS2 humble and tooling"
 
