@@ -15,6 +15,10 @@ From: osrf/ros:humble-desktop-full
 %environment
     export PATH="/usr/bin:$PATH"
 
+%runscript
+    cd ~
+    exec /bin/bash "$@"
+
 %labels
     Author Paola, Harley
     Version 1.0
