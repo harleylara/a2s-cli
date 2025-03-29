@@ -20,10 +20,12 @@ def boostrap_install():
         sys.stderr.write(f"\nError: 'apptainer' is not installed.\n")
         sys.exit(1)
 
-    definitions_dir = Path().home() / f".{__package__}" / "definitions"
+    work_dir = Path().home() / f".{__package__}"
+    definitions_dir = work_dir / "definitions"
     definitions_dir.mkdir(exist_ok=True, parents=True)
 
     shutil.copytree("./definitions/", definitions_dir, dirs_exist_ok=True)
+    shutil.copytree("install.sh", work_dir, dirs_exist_ok=True)
 
 
 class DevelopCmd(develop):
