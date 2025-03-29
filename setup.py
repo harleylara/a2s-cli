@@ -25,7 +25,7 @@ def boostrap_install():
     definitions_dir.mkdir(exist_ok=True, parents=True)
 
     shutil.copytree("./definitions/", definitions_dir, dirs_exist_ok=True)
-    shutil.copytree("install.sh", work_dir, dirs_exist_ok=True)
+    shutil.copy("./install.sh", work_dir, dirs_exist_ok=True)
 
 
 class DevelopCmd(develop):
