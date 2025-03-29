@@ -77,9 +77,9 @@ get_latest_repo() {
 }
 
 if [ "$1" == "update" ]; then
-    update_repo
+    get_latest_repo
 else
     install_dependencies
-    update_repo
+    get_latest_repo
 fi
 
