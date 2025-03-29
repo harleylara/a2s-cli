@@ -1,5 +1,5 @@
 import argparse
-from a2s.commands import Command, Run, Init
+from a2s.commands import Command, Run, Init, Update
 
 """
 All commands exposed in this tool must be explicitly
@@ -9,7 +9,8 @@ the value is the implementation of the command.
 """
 COMMAND_OPTS: dict[str, type[Command]] = {
     "run": Run,
-    "init": Init
+    "init": Init,
+    "update": Update
 }
 
 def main(args=None) -> None:
