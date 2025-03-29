@@ -2,21 +2,8 @@
 
 ## Install
 
-Intall dependencies:
+The following command takes care of installing the necessary dependencies and installs `a2s` cli tool for you:
 
-for Ubuntu systems:
-```
-sudo apt update
-sudo apt install -y software-properties-common
-sudo add-apt-repository -y ppa:apptainer/ppa
-sudo apt update
-sudo apt install -y apptainer
-```
-
-Install tool:
-
-```
-git clone https://github.com/harleylara/a2s-cli.git
-cd a2s-cli
-pip install .
+```sh
+wget --show-progress --tries=1 -qO- https://raw.githubusercontent.com/harleylara/a2s-cli/refs/heads/main/install.sh | bash
 ```
