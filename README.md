@@ -1,9 +1,13 @@
-# `a2s-cli`
+# `a2s`
+
+`a2s` is a small tool that is in charge of managing the robot containers. Behind the scenes it uses [apptainer](https://apptainer.org/) to manage the containers and the necessary configurations to build and launch them. For more technical details see [DEVELOPMENT.md](./DEVELOPMENT.md)
+
+The idea is to provide reproducible software development environments for any of the robots.
 
 This tool is only available for the following operating systems:
-- Linux: **Ubuntu 22.04** (recommended).
-- Windows: Through WLS 2 with Ubuntu 22.04 (experimental).
-- MacOS: technically possible but not yet implemented.
+- ✅ Linux: **Ubuntu 22.04** (recommended).
+- 🧪 Windows: Through WLS 2 with Ubuntu 22.04 (experimental).
+- ❌ MacOS: technically possible but not yet implemented.
 
 > [!IMPORTANT]
 > Installation is restricted to linux systems only.
