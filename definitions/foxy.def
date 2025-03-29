@@ -12,3 +12,7 @@ From: base.sif
 
     # Clean up to reduce image size
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+%runscript
+    cd ~
+    exec /bin/bash "$@"

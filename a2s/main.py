@@ -1,11 +1,28 @@
 import argparse
-from a2s.commands import Command, Run
+from a2s.commands import Command, Run, Init
 
+"""
+All commands exposed in this tool must be explicitly
+registered in this dictionary (`COMMAND_OPTS`), where the key 
+is the name of the command exposed to the user and
+the value is the implementation of the command.
+"""
 COMMAND_OPTS: dict[str, type[Command]] = {
-    "run": Run
+    "run": Run,
+    "init": Init
 }
 
 def main(args=None) -> None:
+    """
+    This is the main entry point for this cli tool.
+
+    The main purpose of this section is to dispatch the commands. All commands
+    follow the form:
+
+        a2s <command REQUIRED> <args...>
+
+    All commands must be derived from the base class `Command`.
+    """
 
     parser = argparse.ArgumentParser(
         prog="a2s",

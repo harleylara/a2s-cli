@@ -25,12 +25,19 @@ Important: the underlying command is executed in the `~/.a2s` folder by default.
 
     def execute(self, args: Namespace):
 
+        if not (CONTAINERS_DIR / f"{args.robot}.sif").exists():
+            print(f"The '{args.robot}' robot container has not been found.\n")
+            print("be sure to initialize the container (one-time operation)")
+            print("use the command:\n\n")
+            print(f"    a2s init {args.robot}\n\n")
+            print("this operation may take time")
+            return
+
         if args.raw:
             full_cmd = ["apptainer", "run"] + args.raw
             subprocess.run(full_cmd, check=True, cwd=args.path)
             return
 
-        # TODO: FIX change shell for RUN but add a startscript
-        run_cmd = ["apptainer", "shell", f"{args.robot}.sif"]
+        run_cmd = ["apptainer", "run", f"{args.robot}.sif"]
         subprocess.run(run_cmd, check=True, cwd=args.path)
 

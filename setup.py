@@ -7,9 +7,6 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
 
 __package__ = "a2s"
-WORK_DIR = Path().home() / f".{__package__}"
-DEFITIONS_DIR = WORK_DIR / "definitions"
-CONTAINERS_DIR = WORK_DIR / "containers"
 
 def boostrap_install():
 
@@ -23,30 +20,10 @@ def boostrap_install():
         sys.stderr.write(f"\nError: 'apptainer' is not installed.\n")
         sys.exit(1)
 
-    WORK_DIR.mkdir(exist_ok=True)
+    definitions_dir = Path().home() / f".{__package__}" / "definitions"
+    definitions_dir.mkdir(exist_ok=True, parents=True)
 
-    DEFITIONS_DIR.mkdir(exist_ok=True)
-    CONTAINERS_DIR.mkdir(exist_ok=True)
-
-    shutil.copytree("./definitions/", DEFITIONS_DIR, dirs_exist_ok=True)
-
-    # always build base.def first
-    subprocess.run(
-        [
-            "apptainer",
-            "build",
-            "--force",
-            CONTAINERS_DIR / "base.sif",
-            DEFITIONS_DIR / "base.def",
-        ],
-        cwd=WORK_DIR,
-        check=True
-    )
-
-    for item in DEFITIONS_DIR.iterdir():
-        # skip base.def
-        if item.is_file() and (item.stem != "base"):
-            subprocess.run(["apptainer", "build", f"{item.stem}.sif", DEFITIONS_DIR / item.name], cwd=CONTAINERS_DIR, check=True)
+    shutil.copytree("./definitions/", definitions_dir, dirs_exist_ok=True)
 
 
 class DevelopCmd(develop):
