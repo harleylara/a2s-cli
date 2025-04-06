@@ -2,16 +2,17 @@ Bootstrap: localimage
 From: base.sif
 
 %post
-    apt-get update && apt-get install -y \
-        ros-humble-ros2-controllers
-    mkdir -p ~/foxy_robot_ws/src
-    cd ~/foxy_robot_ws/src
-    git clone https://github.com/EOLab-HSRW/foxy-robot.git
-    cd ~/foxy_robot_ws
-    rosdep install --from-paths src --ignore-src -r -y
+    apt-get update && apt-get upgrade -y
+    mkdir -p /home/$USER/foxy_ws/src
+    git clone https://github.com/EOLab-HSRW/foxy-robot.git /home/$USER/foxy_ws/src/foxy-robot
+    chown -R $USER:$USER /home/$USER/foxy_ws/src/foxy-robot
+    rosdep install --from-paths /home/$USER/foxy_ws/src --ignore-src -r -y
 
     # Clean up to reduce image size
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+%environment
+    export PS1="foxy> "
 
 %labels
     Author Paola, Harley
@@ -19,5 +20,7 @@ From: base.sif
     Description "Base image for foxy robot"
 
 %runscript
-    cd ~
+    cd /home/$USER/foxy_ws/src/foxy-robot
+    git pull origin main
+    cd /home/$USER
     exec /bin/bash "$@"
